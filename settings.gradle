@@ -1,0 +1,12 @@
+rootProject.name = 'coen-board'
+
+include (
+        'services',
+        'services:coupon',
+        'services:coupon:presentation',
+        'services:coupon:presentation:api',
+        'services:coupon:domain',
+        'services:coupon:usecase',
+        'services:coupon:infrastructure',
+        'services:coupon:infrastructure:persistence',
+)

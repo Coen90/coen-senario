@@ -1,0 +1,28 @@
+repositories {
+    mavenCentral()
+}
+
+tasks.named("bootJar") {
+    enabled = true
+}
+
+tasks.named("jar") {
+    enabled = false
+}
+
+dependencies {
+    // module
+    implementation project(':services:coupon:usecase')
+    implementation project(':services:coupon:domain')
+    compileOnly project(':services:coupon:infrastructure:persistence')
+
+    // web
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    // test
+    testImplementation 'com.h2database:h2'
+}
+
+springBoot {
+    buildInfo()
+}
