@@ -1,24 +1,27 @@
-package com.coen.coupon.controller;
+package com.coen.coupon.api.controller.v1;
 
-import com.coen.coupon.Coupon;
-import com.coen.coupon.CouponCreateUseCase;
-import lombok.RequiredArgsConstructor;
+import com.coen.coupon.usecase.CouponIssueUseCase;
+import com.coen.coupon.domain.UserCoupon;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequiredArgsConstructor
 @RequestMapping("/v1/coupons")
 public class CouponController {
 
-    private final CouponCreateUseCase couponCreateUseCase;
+    private final CouponIssueUseCase couponIssueUseCase;
+
+    public CouponController(CouponIssueUseCase couponIssueUseCase) {
+        this.couponIssueUseCase = couponIssueUseCase;
+    }
 
     @GetMapping
-    public String coupons(@RequestParam Long id, @RequestParam String name) {
-        Coupon coupon = couponCreateUseCase.createCoupon(id, name);
-        return coupon.toString();
+    public ResponseEntity<UserCoupon> coupons(@RequestParam Long couponId, @RequestParam Long userId) {
+        UserCoupon userCoupon = couponIssueUseCase.issueCoupon(couponId, userId);
+        return ResponseEntity.ok(userCoupon);
     }
 }
 
