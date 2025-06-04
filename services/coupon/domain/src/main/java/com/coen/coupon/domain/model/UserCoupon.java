@@ -1,4 +1,4 @@
-package com.coen.coupon.domain;
+package com.coen.coupon.domain.model;
 
 import java.time.LocalDateTime;
 

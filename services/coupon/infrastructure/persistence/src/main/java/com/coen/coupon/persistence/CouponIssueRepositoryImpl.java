@@ -1,7 +1,7 @@
 package com.coen.coupon.persistence;
 
-import com.coen.coupon.domain.Coupon;
-import com.coen.coupon.domain.UserCoupon;
+import com.coen.coupon.domain.model.Coupon;
+import com.coen.coupon.domain.model.UserCoupon;
 import com.coen.coupon.persistence.entity.CouponEntity;
 import com.coen.coupon.persistence.entity.UserCouponEntity;
 import com.coen.coupon.persistence.jpa.UserCouponJpaRepository;

@@ -1,12 +1,13 @@
 package com.coen.coupon.persistence.entity;
 
-import com.coen.coupon.domain.Coupon;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.coen.coupon.domain.model.Coupon;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Entity
@@ -21,7 +22,8 @@ public class CouponEntity {
 
     private Long maximumIssueCount;
 
-//    private List<UserCouponEntity> userCoupons;
+    @OneToMany(mappedBy = "coupon", cascade = CascadeType.ALL, orphanRemoval = true)
+    private final List<UserCouponEntity> userCoupons = new ArrayList<>();
 
     protected CouponEntity() {
     }

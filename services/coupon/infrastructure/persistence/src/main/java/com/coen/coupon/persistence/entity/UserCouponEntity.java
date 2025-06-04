@@ -1,6 +1,6 @@
 package com.coen.coupon.persistence.entity;
 
-import com.coen.coupon.domain.UserCoupon;
+import com.coen.coupon.domain.model.UserCoupon;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -20,9 +20,9 @@ public class UserCouponEntity {
 
     private LocalDateTime expiredAt;
 
-//    @ManyToOne
-//    @JoinColumn(name = "id")
-//    private CouponEntity coupon;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "coupon_id", nullable = false)
+    private CouponEntity coupon;
 
     protected UserCouponEntity() {
     }
@@ -30,7 +30,7 @@ public class UserCouponEntity {
     @Builder(access = AccessLevel.PRIVATE)
     public UserCouponEntity(Long userId, CouponEntity coupon, LocalDateTime issuedAt, LocalDateTime expiredAt) {
         this.userId = userId;
-//        this.coupon = coupon;
+        this.coupon = coupon;
         this.issuedAt = issuedAt;
         this.expiredAt = expiredAt;
     }

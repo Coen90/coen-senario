@@ -1,7 +1,7 @@
 package com.coen.coupon.api.controller.v1;
 
 import com.coen.coupon.usecase.CouponIssueUseCase;
-import com.coen.coupon.domain.UserCoupon;
+import com.coen.coupon.domain.model.UserCoupon;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +19,7 @@ public class CouponController {
     }
 
     @GetMapping
-    public ResponseEntity<UserCoupon> coupons(@RequestParam Long couponId, @RequestParam Long userId) {
+    public ResponseEntity<UserCoupon> issueCoupon(@RequestParam Long couponId, @RequestParam Long userId) {
         UserCoupon userCoupon = couponIssueUseCase.issueCoupon(couponId, userId);
         return ResponseEntity.ok(userCoupon);
     }
