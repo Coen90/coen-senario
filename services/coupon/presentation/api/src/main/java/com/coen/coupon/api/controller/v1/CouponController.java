@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/v1/coupons/issue")
+@RequestMapping("/api/v1/coupons/issue")
 public class CouponController {
 
     private final CouponIssueUseCase couponIssueUseCase;

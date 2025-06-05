@@ -15,7 +15,7 @@ public class CouponIssuePolicy {
             throw new CouponIssueCountExceededException("쿠폰 발급 수량이 초과되었습니다. 현재 발급된 수량: " + userCoupons.size() + ", 최대 발급 가능 수량: " + maximumIssueCount);
         }
         boolean isIssued = userCoupons.stream()
-                .map(UserCoupon::id)
+                .map(UserCoupon::userId)
                 .anyMatch(id -> id == userId);
         if (isIssued) {
             throw new CouponAlreadyIssuedException("이미 발급된 쿠폰입니다. userId: " + userId);

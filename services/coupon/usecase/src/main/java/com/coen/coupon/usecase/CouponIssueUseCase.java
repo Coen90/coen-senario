@@ -7,10 +7,12 @@ import com.coen.coupon.usecase.port.CouponIssueRepository;
 import com.coen.coupon.usecase.port.CouponQueryRepository;
 import com.coen.coupon.usecase.port.UserCouponQueryRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Transactional(readOnly = true)
 public class CouponIssueUseCase {
 
     private final CouponQueryRepository couponQueryRepository;
@@ -25,6 +27,7 @@ public class CouponIssueUseCase {
         this.couponIssuePolicy = couponIssuePolicy;
     }
 
+    @Transactional
     public UserCoupon issueCoupon(Long couponId, Long userId) {
         // 유저 id 확인(유저 id는 항상 존재한다고 가정)
         Coupon coupon = couponQueryRepository.findById(couponId)
