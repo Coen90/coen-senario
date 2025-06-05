@@ -4,8 +4,8 @@ import java.time.LocalDateTime;
 
 public record UserCoupon(
         Long id,
-        Long couponId,
-        Long name,
+        Long userId,
+        Coupon coupon,
         LocalDateTime issuedAt,
         LocalDateTime expiredAt
 ) {

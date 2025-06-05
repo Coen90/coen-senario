@@ -8,12 +8,18 @@ import lombok.Builder;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "user_coupons")
+@Table(
+        name = "user_coupons",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = {"user_id", "coupon_id"})
+        }
+)
 public class UserCouponEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "user_id", nullable = false)
     private Long userId;
 
     private LocalDateTime issuedAt;
@@ -36,7 +42,7 @@ public class UserCouponEntity {
     }
 
     public UserCoupon toDomain() {
-        return new UserCoupon(id, userId, 1L, issuedAt, expiredAt);
+        return new UserCoupon(id, userId, coupon.toDomain(), issuedAt, expiredAt);
     }
 
     public static UserCouponEntity of(long userId, CouponEntity coupon) {

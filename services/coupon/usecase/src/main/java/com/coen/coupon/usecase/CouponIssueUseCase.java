@@ -8,6 +8,8 @@ import com.coen.coupon.usecase.port.CouponQueryRepository;
 import com.coen.coupon.usecase.port.UserCouponQueryRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CouponIssueUseCase {
 
@@ -27,8 +29,8 @@ public class CouponIssueUseCase {
         // 유저 id 확인(유저 id는 항상 존재한다고 가정)
         Coupon coupon = couponQueryRepository.findById(couponId)
                 .orElseThrow(() -> new IllegalArgumentException("없는 쿠폰번호 입니다. couponId: " + couponId));
-        long count = userCouponQueryRepository.countAllByCoupon(coupon);
-        couponIssuePolicy.validateCount(count, coupon.maximumIssueCount());
+        List<UserCoupon> userCoupons = userCouponQueryRepository.findAllByCoupon(coupon);
+        couponIssuePolicy.validateCount(userCoupons, userId, coupon.maximumIssueCount());
         return couponIssueRepository.issueCoupon(coupon, userId);
     }
 }
