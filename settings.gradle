@@ -1,4 +1,4 @@
-rootProject.name = 'coen-board'
+rootProject.name = 'coen-coupon'
 
 include (
         'services',

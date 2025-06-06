@@ -2,6 +2,9 @@ repositories {
     mavenCentral()
 }
 
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
 tasks.named("bootJar") {
     enabled = true
 }
@@ -14,7 +17,7 @@ dependencies {
     // module
     implementation project(':services:coupon:usecase')
     implementation project(':services:coupon:domain')
-    compileOnly project(':services:coupon:infrastructure:persistence')
+    implementation project(':services:coupon:infrastructure:persistence')
 
     // web
     implementation 'org.springframework.boot:spring-boot-starter-web'
