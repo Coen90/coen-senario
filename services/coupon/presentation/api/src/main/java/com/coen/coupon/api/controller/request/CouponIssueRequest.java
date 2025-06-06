@@ -1,4 +1,4 @@
-package com.coen.coupon.api.controller.v1.request;
+package com.coen.coupon.api.controller.request;
 
 public record CouponIssueRequest(
         Long couponId,
