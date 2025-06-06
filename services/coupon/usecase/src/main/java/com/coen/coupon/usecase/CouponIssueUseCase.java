@@ -1,5 +1,7 @@
 package com.coen.coupon.usecase;
 
+import com.coen.coupon.domain.exception.CouponNotFoundException;
+import com.coen.coupon.domain.exception.ErrorCode;
 import com.coen.coupon.domain.model.Coupon;
 import com.coen.coupon.domain.model.UserCoupon;
 import com.coen.coupon.domain.policy.CouponIssuePolicy;
@@ -31,7 +33,7 @@ public class CouponIssueUseCase {
     public UserCoupon issueCoupon(Long couponId, Long userId) {
         // 유저 id 확인(유저 id는 항상 존재한다고 가정)
         Coupon coupon = couponQueryRepository.findById(couponId)
-                .orElseThrow(() -> new IllegalArgumentException("없는 쿠폰번호 입니다. couponId: " + couponId));
+                .orElseThrow(() -> new CouponNotFoundException(ErrorCode.COUPON_NOT_FOUND, "없는 쿠폰번호 입니다. couponId: " + couponId));
         List<UserCoupon> userCoupons = userCouponQueryRepository.findAllByCoupon(coupon);
         couponIssuePolicy.validateCount(coupon, userCoupons, userId);
         return couponIssueRepository.issueCoupon(coupon, userId);
