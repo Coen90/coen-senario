@@ -33,7 +33,7 @@ public class CouponIssueUseCase {
         Coupon coupon = couponQueryRepository.findById(couponId)
                 .orElseThrow(() -> new IllegalArgumentException("없는 쿠폰번호 입니다. couponId: " + couponId));
         List<UserCoupon> userCoupons = userCouponQueryRepository.findAllByCoupon(coupon);
-        couponIssuePolicy.validateCount(userCoupons, userId, coupon.maximumIssueCount());
+        couponIssuePolicy.validateCount(coupon, userCoupons, userId);
         return couponIssueRepository.issueCoupon(coupon, userId);
     }
 }

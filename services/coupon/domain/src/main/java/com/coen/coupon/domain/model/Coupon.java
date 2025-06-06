@@ -6,4 +6,7 @@ public record Coupon(
         String description,
         Long maximumIssueCount
 ) {
+    public boolean canBeIssued(int size) {
+        return size < maximumIssueCount;
+    }
 }

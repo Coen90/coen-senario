@@ -35,6 +35,6 @@ class CouponApplicationV1Test {
             });
         }
 
-        latch.await(); // 모든 요청 완료 대기
+        latch.await();
     }
 }
