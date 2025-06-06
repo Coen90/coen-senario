@@ -1,0 +1,96 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: coupon
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3307:3306"
+    volumes:
+      - db-data:/var/lib/mysql
+    networks:
+      - commerce-net
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "--silent" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  spring-app-1:
+    image: openjdk:21
+    container_name: spring-app-1
+    working_dir: /app
+    volumes:
+      - ./services/coupon/presentation/api/build/libs:/app
+    command: ["java", "-jar", "api.jar", "--server.port=8081"]
+
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/coupon?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&serverTimezone=Asia/Seoul
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - commerce-net
+
+  spring-app-2:
+    image: openjdk:21
+    container_name: spring-app-2
+    working_dir: /app
+    volumes:
+      - ./services/coupon/presentation/api/build/libs:/app
+    command: [ "java", "-jar", "api.jar", "--server.port=8082" ]
+
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/coupon?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&serverTimezone=Asia/Seoul
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - commerce-net
+
+  spring-app-3:
+    image: openjdk:21
+    container_name: spring-app-3
+    working_dir: /app
+    volumes:
+      - ./services/coupon/presentation/api/build/libs:/app
+    command: [ "java", "-jar", "api.jar", "--server.port=8083" ]
+
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/coupon?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&serverTimezone=Asia/Seoul
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - commerce-net
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - spring-app-1
+      - spring-app-2
+      - spring-app-3
+    networks:
+      - commerce-net
+
+volumes:
+  db-data:
+
+networks:
+  commerce-net:
+    driver: bridge
