@@ -23,7 +23,7 @@ class CouponApplicationV1Test {
                 try {
                     RestTemplate restTemplate = new RestTemplate();
                     restTemplate.postForEntity(
-                            "http://localhost:8080/api/v1/coupons/issue",
+                            "http://localhost/api/v1/coupons/issue",
                             new HttpEntity<>(Map.of("userId", userId, "couponId", 1L)),
                             String.class
                     );
