@@ -14,8 +14,15 @@ public class CouponControllerAdvice {
     @ExceptionHandler(BusinessException.class)
     public ResponseEntity<ErrorResponse> handleBusinessException(BusinessException e) {
         ErrorCode errorCode = e.getErrorCode();
-        log.error("Business exception occurred: {}", e.getMessage(), e);
+        log.error("Business exception occurred: {}", e.getMessage());
         return ResponseEntity.status(e.getStatusCode())
                 .body(ErrorResponse.from(errorCode));
+    }
+
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<ErrorResponse> handleRuntimeException(RuntimeException e) {
+        log.error("Runtime exception occurred: {}", e.getMessage(), e);
+        return ResponseEntity.status(500)
+                .body(ErrorResponse.from(ErrorCode.INTERNAL_SERVER_ERROR));
     }
 }
