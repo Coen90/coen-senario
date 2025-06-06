@@ -1,6 +1,6 @@
-package com.coen.coupon.api.controller.v1;
+package com.coen.coupon.api.controller;
 
-import com.coen.coupon.api.controller.v1.request.CouponIssueRequest;
+import com.coen.coupon.api.controller.request.CouponIssueRequest;
 import com.coen.coupon.usecase.CouponIssueUseCase;
 import com.coen.coupon.domain.model.UserCoupon;
 import org.springframework.http.ResponseEntity;

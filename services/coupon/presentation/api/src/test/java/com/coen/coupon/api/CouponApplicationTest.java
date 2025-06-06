@@ -1,4 +1,4 @@
-package com.coen.coupon.api.v1;
+package com.coen.coupon.api;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpEntity;
@@ -9,7 +9,7 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-class CouponApplicationV1Test {
+class CouponApplicationTest {
     @Test
     void concurrentCouponIssueTest() throws InterruptedException {
         int threadCount = 1000;
