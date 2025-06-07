@@ -27,7 +27,6 @@ subprojects {
         }
     }
 
-
     plugins.withId('org.springframework.boot') {
         tasks.named('bootJar') {
             enabled = false
