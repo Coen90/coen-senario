@@ -13,8 +13,8 @@ import java.util.Objects;
 public class CouponIssuePolicy {
 
     public void validateCount(Coupon coupon, List<UserCoupon> userCoupons, Long userId) {
-        if (!coupon.canBeIssued(userCoupons.size())) {
-            throw new CouponIssueCountExceededException("쿠폰 발급 수량이 초과되었습니다. 현재 발급된 수량: " + userCoupons.size() + ", 최대 발급 가능 수량: " + coupon.maximumIssueCount());
+        if (!coupon.canBeIssued()) {
+            throw new CouponIssueCountExceededException("쿠폰 발급 수량이 초과되었습니다. 현재 발급 가능한 수량: " + coupon.remainingIssueCount() + ", 최대 발급 가능 수량: " + coupon.maximumIssueCount());
         }
         if (isUserIssued(userCoupons, userId)) {
             throw new CouponAlreadyIssuedException("이미 발급된 쿠폰입니다. userId: " + userId);

@@ -36,6 +36,6 @@ public class CouponIssueUseCase {
                 .orElseThrow(() -> new CouponNotFoundException(ErrorCode.COUPON_NOT_FOUND, "없는 쿠폰번호 입니다. couponId: " + couponId));
         List<UserCoupon> userCoupons = userCouponQueryRepository.findAllByCoupon(coupon);
         couponIssuePolicy.validateCount(coupon, userCoupons, userId);
-        return couponIssueRepository.issueCoupon(coupon, userId);
+        return couponIssueRepository.issueCoupon(coupon.issue(), userId);
     }
 }
