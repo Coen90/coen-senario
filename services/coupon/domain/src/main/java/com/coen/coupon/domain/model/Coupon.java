@@ -4,20 +4,9 @@ public record Coupon(
         Long id,
         String name,
         String description,
-        Long maximumIssueCount,
-        Long remainingIssueCount
+        Long maximumIssueCount
 ) {
-    public boolean canBeIssued() {
-        return remainingIssueCount > 0;
-    }
-
-    public Coupon issue() {
-        return new Coupon(
-                id,
-                name,
-                description,
-                maximumIssueCount,
-                remainingIssueCount - 1
-        );
+    public boolean canBeIssued(int size) {
+        return size < maximumIssueCount;
     }
 }
