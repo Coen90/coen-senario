@@ -1,0 +1,5 @@
+dependencies {
+    // module
+    implementation(project(':services:coupon:domain'))
+    compileOnly(project(':services:coupon:usecase'))
+}

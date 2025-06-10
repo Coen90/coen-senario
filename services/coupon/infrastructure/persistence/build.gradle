@@ -1,7 +1,7 @@
 dependencies {
     // module
     implementation(project(':services:coupon:domain'))
-    implementation(project(':services:coupon:usecase'))
+    compileOnly(project(':services:coupon:usecase'))
 
     compileOnly 'org.springframework.boot:spring-boot-starter-data-jpa'
 
