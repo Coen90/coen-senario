@@ -17,7 +17,7 @@ public class CouponController {
     }
 
     @PostMapping
-    public synchronized ResponseEntity<UserCoupon> issueCoupon(@RequestBody CouponIssueRequest request) {
+    public ResponseEntity<UserCoupon> issueCoupon(@RequestBody CouponIssueRequest request) {
         UserCoupon userCoupon = couponIssueUseCase.issueCoupon(request.couponId(), request.userId());
         return ResponseEntity.ok(userCoupon);
     }
