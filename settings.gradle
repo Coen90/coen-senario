@@ -9,4 +9,5 @@ include (
         'services:coupon:usecase',
         'services:coupon:infrastructure',
         'services:coupon:infrastructure:persistence',
+        'services:coupon:infrastructure:redis',
 )

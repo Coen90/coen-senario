@@ -1,5 +1,24 @@
 version: '3.8'
 
+x-spring-app-common: &spring-app-common
+  image: openjdk:21
+  working_dir: /app
+  volumes:
+    - ./services/coupon/presentation/api/build/libs:/app
+  environment:
+    - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/coupon?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&serverTimezone=Asia/Seoul
+    - SPRING_DATASOURCE_USERNAME=root
+    - SPRING_DATASOURCE_PASSWORD=root
+    - SPRING_DATA_REDIS_HOST=redis
+    - SPRING_DATA_REDIS_PORT=6379
+  depends_on:
+    db:
+      condition: service_healthy
+    redis:
+      condition: service_healthy
+  networks:
+    - commerce-net
+
 services:
   db:
     image: mysql:8.0
@@ -20,59 +39,35 @@ services:
       timeout: 5s
       retries: 10
 
-  spring-app-1:
-    image: openjdk:21
-    container_name: spring-app-1
-    working_dir: /app
+  redis:
+    image: redis:latest
+    container_name: redis
     volumes:
-      - ./services/coupon/presentation/api/build/libs:/app
-    command: ["java", "-jar", "api.jar", "--server.port=8081"]
-
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/coupon?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&serverTimezone=Asia/Seoul
-      - SPRING_DATASOURCE_USERNAME=root
-      - SPRING_DATASOURCE_PASSWORD=root
-    depends_on:
-      db:
-        condition: service_healthy
+      - redis-data:/var/lib/redis
+    ports:
+      - "6380:6379"
     networks:
       - commerce-net
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  spring-app-1:
+    <<: *spring-app-common
+    container_name: spring-app-1
+    command: [ "java", "-jar", "api.jar", "--server.port=8081" ]
 
   spring-app-2:
-    image: openjdk:21
+    <<: *spring-app-common
     container_name: spring-app-2
-    working_dir: /app
-    volumes:
-      - ./services/coupon/presentation/api/build/libs:/app
     command: [ "java", "-jar", "api.jar", "--server.port=8082" ]
 
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/coupon?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&serverTimezone=Asia/Seoul
-      - SPRING_DATASOURCE_USERNAME=root
-      - SPRING_DATASOURCE_PASSWORD=root
-    depends_on:
-      db:
-        condition: service_healthy
-    networks:
-      - commerce-net
-
   spring-app-3:
-    image: openjdk:21
+    <<: *spring-app-common
     container_name: spring-app-3
-    working_dir: /app
-    volumes:
-      - ./services/coupon/presentation/api/build/libs:/app
     command: [ "java", "-jar", "api.jar", "--server.port=8083" ]
-
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/coupon?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&serverTimezone=Asia/Seoul
-      - SPRING_DATASOURCE_USERNAME=root
-      - SPRING_DATASOURCE_PASSWORD=root
-    depends_on:
-      db:
-        condition: service_healthy
-    networks:
-      - commerce-net
 
   nginx:
     image: nginx:latest
@@ -90,6 +85,7 @@ services:
 
 volumes:
   db-data:
+  redis-data:
 
 networks:
   commerce-net:

@@ -18,8 +18,8 @@ public class CouponQueryRepositoryImpl implements CouponQueryRepository {
     }
 
     @Override
-    public Optional<Coupon> findByIdWithPessimisticLock(Long couponId) {
-        return couponJpaRepository.findWithPessimisticLock(couponId)
+    public Optional<Coupon> findById(Long couponId) {
+        return couponJpaRepository.findById(couponId)
                 .map(CouponEntity::toDomain);
     }
 }

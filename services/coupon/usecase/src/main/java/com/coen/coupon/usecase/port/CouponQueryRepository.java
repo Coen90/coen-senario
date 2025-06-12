@@ -6,5 +6,5 @@ import java.util.Optional;
 
 public interface CouponQueryRepository {
 
-    Optional<Coupon> findByIdWithPessimisticLock(Long couponId);
+    Optional<Coupon> findById(Long couponId);
 }

@@ -21,7 +21,7 @@ public class CouponControllerAdvice {
 
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<ErrorResponse> handleRuntimeException(RuntimeException e) {
-        log.error("Runtime exception occurred: {}", e.getMessage(), e);
+        log.error("Runtime exception occurred: {}", e.getMessage());
         return ResponseEntity.status(500)
                 .body(ErrorResponse.from(ErrorCode.INTERNAL_SERVER_ERROR));
     }

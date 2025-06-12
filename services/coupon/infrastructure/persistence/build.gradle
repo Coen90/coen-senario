@@ -1,9 +1,10 @@
 dependencies {
     // module
     implementation(project(':services:coupon:domain'))
-    implementation(project(':services:coupon:usecase'))
+    compileOnly(project(':services:coupon:usecase'))
 
     compileOnly 'org.springframework.boot:spring-boot-starter-data-jpa'
+    runtimeOnly 'com.mysql:mysql-connector-j'
 
     // querydsl 사용하게되면 아래 의존성 주석 제거
     //    implementation "com.querydsl:querydsl-jpa:${dependencyManagement.importedProperties['querydsl.version']}:jakarta"
