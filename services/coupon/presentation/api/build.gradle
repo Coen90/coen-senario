@@ -18,6 +18,7 @@ dependencies {
     implementation project(':services:coupon:usecase')
     implementation project(':services:coupon:domain')
     implementation project(':services:coupon:infrastructure:persistence')
+    implementation project(':services:coupon:infrastructure:redis')
 
     // web
     implementation 'org.springframework.boot:spring-boot-starter-web'

@@ -2,4 +2,7 @@ dependencies {
     // module
     implementation(project(':services:coupon:domain'))
     compileOnly(project(':services:coupon:usecase'))
+
+    compileOnly 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'org.redisson:redisson-spring-boot-starter:3.17.4'
 }

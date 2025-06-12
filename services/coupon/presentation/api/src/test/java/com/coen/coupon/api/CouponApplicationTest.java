@@ -12,7 +12,7 @@ import java.util.concurrent.Executors;
 class CouponApplicationTest {
     @Test
     void concurrentCouponIssueTest() throws InterruptedException {
-        int threadCount = 1000;
+        int threadCount = 10000;
         ExecutorService executorService = Executors.newFixedThreadPool(32);
         CountDownLatch latch = new CountDownLatch(threadCount);
 
@@ -23,7 +23,7 @@ class CouponApplicationTest {
                 try {
                     RestTemplate restTemplate = new RestTemplate();
                     restTemplate.postForEntity(
-                            "http://localhost:8080/api/v1/coupons/issue",
+                            "http://localhost/api/v1/coupons/issue",
                             new HttpEntity<>(Map.of("userId", userId, "couponId", 1L)),
                             String.class
                     );
